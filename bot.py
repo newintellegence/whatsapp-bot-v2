@@ -6,7 +6,7 @@ import os
 
 # Load environment variables
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")  # <-- This is the correct way in OpenAI 1.0+
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
 
@@ -27,16 +27,16 @@ def whatsapp_reply():
     ]
 
     try:
-        # Use the correct OpenAI call
-        reply = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=chat_history,
+        # Use the old OpenAI call
+        reply = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=incoming_msg,
             temperature=0.5,
-            max_tokens=100
+            max_tokens=150
         )
 
         # Get the content of the reply
-        response.message(reply.choices[0].message.content)
+        response.message(reply.choices[0].text.strip())
         return str(response)
 
     except Exception as e:
