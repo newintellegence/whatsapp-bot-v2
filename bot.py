@@ -10,6 +10,10 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
 
+@app.route("/", methods=['GET'])
+def index():
+    return "Server is running and reachable!", 200
+
 @app.route("/whatsapp", methods=['POST'])
 def whatsapp_reply():
     incoming_msg = request.values.get('Body', '').strip()
@@ -23,5 +27,5 @@ def whatsapp_reply():
     return str(response)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # <-- Change here
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
