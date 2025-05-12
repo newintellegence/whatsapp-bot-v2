@@ -20,7 +20,7 @@ def whatsapp_reply():
     response = MessagingResponse()
 
     # Define the system message
-    system_message = "You are a professional assistant speaking in Saudi dialect."
+    system_message = "You are a professional assistant speaking in Saudi dialect. Answer in detail and be as informative as possible while staying natural and helpful."
     chat_history = [
         {"role": "system", "content": system_message},
         {"role": "user", "content": incoming_msg}
@@ -32,7 +32,10 @@ def whatsapp_reply():
             model="gpt-3.5-turbo",
             messages=chat_history,
             temperature=0.5,
-            max_tokens=100
+            max_tokens=300,   # <-- Increased from 100 to 300
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0
         )
 
         # Get the content of the reply
