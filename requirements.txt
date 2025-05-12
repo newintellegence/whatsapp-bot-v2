@@ -1,3 +1,4 @@
+--upgrade-strategy only-if-needed
 flask
 twilio
 python-dotenv
