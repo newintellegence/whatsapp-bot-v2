@@ -27,16 +27,16 @@ def whatsapp_reply():
     ]
 
     try:
-        # Use the old OpenAI call
-        reply = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=incoming_msg,
+        # Use the latest OpenAI call
+        reply = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=chat_history,
             temperature=0.5,
-            max_tokens=150
+            max_tokens=100
         )
 
         # Get the content of the reply
-        response.message(reply.choices[0].text.strip())
+        response.message(reply.choices[0].message.content)
         return str(response)
 
     except Exception as e:
