@@ -6,7 +6,7 @@ import os
 
 # Load environment variables
 load_dotenv()
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))  # <-- This is the old client method
+openai.api_key = os.getenv("OPENAI_API_KEY")  # <-- This is the correct way in OpenAI 1.0+
 
 app = Flask(__name__)
 
@@ -27,8 +27,8 @@ def whatsapp_reply():
     ]
 
     try:
-        # Use the client object like the working bot
-        reply = client.chat.completions.create(
+        # Use the correct OpenAI call
+        reply = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=chat_history,
             temperature=0.5,
